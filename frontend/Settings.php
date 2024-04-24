@@ -269,7 +269,7 @@ class Settings {
 			$field_name  = $this->get_locale == 'fa_IR' ? 'admin-font-fa': 'admin-font';
 			$admin_font  = $this->customizing_option[ $field_name ] ?? false;
 
-			if ( isset( $admin_font ) && $admin_font != 'wp-default' ) {
+			if ( !empty( $admin_font ) && $admin_font != 'wp_default_font' ) {
 				if ( $this->get_locale == 'fa_IR' ) {
 					wp_register_style( EZPZ_TWEAKS_TEXTDOMAIN . '-' . $field_name, '' );
 					wp_enqueue_style( EZPZ_TWEAKS_TEXTDOMAIN . '-' . $field_name );

@@ -49,6 +49,7 @@ class Settings_Page {
 		add_action( 'admin_enqueue_scripts', array( $font, 'change_admin_font' ), 30 );
 		add_action( 'admin_enqueue_scripts', array( $font, 'change_editor_font' ), 30 );
 		add_action( 'admin_enqueue_scripts', array( $font, 'render_fonts_css' ), 30 );
+        add_action( 'admin_enqueue_scripts', array( $this, 'settings_add_select2' ), 30 );
 
 
         add_action( 'wp_enqueue_scripts', array( $font, 'render_fonts_css' ), 30 );
@@ -393,5 +394,10 @@ class Settings_Page {
 		}
 
 	}
+    
+    public function settings_add_select2(){
+        wp_enqueue_style( EZPZ_TWEAKS_TEXTDOMAIN . '-select2-css', EZPZ_TWEAKS_PLUGIN_ROOT_URL.'assets/css/select2.min.css');
+        wp_enqueue_script( EZPZ_TWEAKS_TEXTDOMAIN . '-select2-js', EZPZ_TWEAKS_PLUGIN_ROOT_URL.'assets/js/select2.min.js', array(), '1.0' );
+    }
 
 }

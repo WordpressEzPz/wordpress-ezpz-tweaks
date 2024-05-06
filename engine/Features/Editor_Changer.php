@@ -52,6 +52,7 @@ class Editor_Changer {
                     wp_send_json_error();
                 }
                 update_option('classic-editor-allow-users','allow');
+                update_option('classic-editor-replace','classic');
             }
         } else {
             if ( $is_installed ) {

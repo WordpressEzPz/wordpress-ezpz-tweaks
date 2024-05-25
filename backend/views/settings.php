@@ -28,6 +28,9 @@ $page = 'wpezpz-tweaks';
 	<!-- End tabs -->
 
 </div>
+<p style="position:relative;top:24px;margin: 0 8px;">
+<?php echo ezpz_option_dropdown();//functions.php ?>
+</p>
 <div class="ezpz-tweaks-tabs ezpz-tweaks-tabs-content">
 	<?php 	Render::tabs( $page ); ?>
 </div>

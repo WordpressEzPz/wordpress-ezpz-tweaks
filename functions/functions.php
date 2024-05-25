@@ -61,6 +61,21 @@ function ezpz_tweaks_recursive_sanitize( $array ) {
     return $array;
 }
 
+function ezpz_option_dropdown(){
+    global $wp_roles;
+    $select = empty($_POST['ezpz_option_user'])?'all':$_POST['ezpz_option_user'];
+    $form = 'wpezpz-tweaks_options_'.(empty($_GET['tab'])?'customizing-branding':$_GET['tab']);
+    $out = '<select name="ezpz_option_user" class="ezpz_option_user" form="'.$form.'" dir="'.(is_rtl()?'rtl':'ltr').'">
+                <option value="all" '.($select=='all'?'selected="selected"':'').'>All</option>
+                <optgroup label="Roles">';
+    foreach($wp_roles->roles as $key=>$value){
+        $out .="<option value='$key' ".($select==$key?'selected="selected"':'').">{$value['name']}</option>";
+    }
+    return $out.'
+        </optgroup>    
+    </select>';
+}
+
 /*function ezpz_tweaks_get_dashboard_widgets(){
     global $wp_meta_boxes;
     if(isset($wp_meta_boxes['dashboard']))

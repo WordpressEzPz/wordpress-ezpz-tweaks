@@ -57,7 +57,7 @@ class Custom_Font {
             self::$customizing_option = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-customizing-branding' );
         }
 
-        if ( isset( $_POST['submit-cmb'] ) ) {
+        if ( isset( $_POST['submit-cmb'] ) and isset($_POST['custom_fonts_repeat_group']) ) {
             $custom_fonts_repeat_group = $_POST['custom_fonts_repeat_group'];
         } else {
             $custom_fonts_repeat_group = self::$customizing_option['custom_fonts_repeat_group'] ?? [];

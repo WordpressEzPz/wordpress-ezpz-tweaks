@@ -53,6 +53,8 @@
         add_filter("cmb2_types_esc_wysiwyg",'cmb2_types_esc_select2',10,4);
         add_filter("cmb2_types_esc_colorpicker",'cmb2_types_esc_select2',10,4);
         add_filter("cmb2_types_esc_code-editor",'cmb2_types_esc_code_editor',10,4);
+        add_filter("cmb2_types_esc_radio",'cmb2_types_esc_select2',10,4);
+        add_filter("cmb2_types_esc_text",'cmb2_types_esc_select2',10,4);
     }
 
     function cmb2_types_esc_select2($i, $meta_value, $args, $cmb2_field){
@@ -70,7 +72,7 @@
         $len = strlen(EZPZ_TWEAKS_TEXTDOMAIN)+1;
         $tab = substr($tab,$len);
         $opt = expz_admin_settings();
-        $val = ($val = $opt[$args['_name']])?$val:$meta_value;
+        $val = (isset($opt[$args['_name']]))?$opt[$args['_name']]:$meta_value;
         return $val;
     }
 

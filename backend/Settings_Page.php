@@ -90,9 +90,10 @@ class Settings_Page {
 		/*$this->customizing_option = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-customizing-branding' );
 		$this->performance_option = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-performance' );
 		$this->security_option 	  = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-security' );*/
-		$this->customizing_option = expz_admin_settings();
-		$this->performance_option = expz_admin_settings();
-		$this->security_option 	  = expz_admin_settings();
+		$this->customizing_option = expz_admin_settings('customizing-branding');
+		$this->performance_option = expz_admin_settings('performance');
+		$this->security_option 	  = expz_admin_settings('security');
+
 	}
 
 	/**
@@ -355,10 +356,8 @@ class Settings_Page {
 
 			}
 
-
 			return;
 		}
-
 
 		return;
 	}
@@ -417,9 +416,7 @@ class Settings_Page {
 		
 		$sname = empty($_GET['tab'])?'customizing-branding':sanitize_text_field($_GET['tab']);
 		$sname = sanitize_text_field($_POST['ezpz_option_user'])."-$sname";
-		unset($_POST['ezpz_option_user']);
 		unset($_POST['ezpz_nonce']);
-		unset($_POST['object_id']);
 		unset($_POST['submit-cmb']);
 		
 		if(isset($_POST['nonce_CMB2phpwpezpz-tweaks_options_customizing-branding']))

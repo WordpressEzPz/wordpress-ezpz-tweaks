@@ -51,7 +51,7 @@
         add_filter("cmb2_types_esc_checkbox",'cmb2_types_esc_select2',10,4);
         add_filter("cmb2_types_esc_select2multiple",'cmb2_types_esc_code_editor',10,4);
         add_filter("cmb2_types_esc_wysiwyg",'cmb2_types_esc_select2',10,4);
-        add_filter("cmb2_types_esc_colorpicker",'cmb2_types_esc_select2',10,4);
+        add_filter("cmb2_types_esc_colorpicker",'cmb2_types_esc_colorpicker',10,4);
         add_filter("cmb2_types_esc_code-editor",'cmb2_types_esc_code_editor',10,4);
         add_filter("cmb2_types_esc_radio",'cmb2_types_esc_select2',10,4);
         add_filter("cmb2_types_esc_text",'cmb2_types_esc_select2',10,4);
@@ -61,7 +61,7 @@
         $tab = $args['render_row_cb'][0]->object_id;
         $len = strlen(EZPZ_TWEAKS_TEXTDOMAIN)+1;
         $tab = substr($tab,$len);
-        $opt = expz_admin_settings();
+        $opt = expz_admin_settings($tab);
         if(empty($opt) or empty($opt[$args['_name']]))
         return $meta_value;
         return esc_attr($opt[$args['_name']]);
@@ -71,14 +71,25 @@
         $tab = $args['render_row_cb'][0]->object_id;
         $len = strlen(EZPZ_TWEAKS_TEXTDOMAIN)+1;
         $tab = substr($tab,$len);
-        $opt = expz_admin_settings();
+        $opt = expz_admin_settings($tab);
         $val = (isset($opt[$args['_name']]))?$opt[$args['_name']]:$meta_value;
         return $val;
     }
-
-    function cmb2_types_esc_colorpicker($i, $meta_value, $args, $cmb2_field){
-        var_dump($meta_value);
-        return $meta_value;
-    }
     
+    function cmb2_types_esc_colorpicker($i, $meta_value, $args, $cmb2_field){
+        $DEFAULT_COLORS = [
+            'admin_colors__base'         => '#1d2327',
+            'admin_colors__text'         => '#f0f0f1',
+            'admin_colors__icon'         => '#f0f6fc99',
+            'admin_colors__highlight'    => '#2271b1',
+            'admin_colors__notification' => '#d63638',
+        ];
+        $tab = $args['render_row_cb'][0]->object_id;
+        $len = strlen(EZPZ_TWEAKS_TEXTDOMAIN)+1;
+        $tab = substr($tab,$len);
+        $opt = expz_admin_settings($tab);
+        if(empty($opt) or empty($opt[$args['_name']]))
+        return $DEFAULT_COLORS[$args['_name']];
+        return esc_attr($opt[$args['_name']]);
+    }
 ?>

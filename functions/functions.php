@@ -63,7 +63,7 @@ function ezpz_tweaks_recursive_sanitize( $array ) {
 
 function ezpz_option_dropdown(){
     global $wp_roles;
-    $select = empty($_POST['ezpz_option_user'])?'all':$_POST['ezpz_option_user'];var_dump($select);
+    $select = empty($_POST['ezpz_option_user'])?'all':$_POST['ezpz_option_user'];
     $form   = 'wpezpz-tweaks_options_'.(empty($_GET['tab'])?'customizing-branding':$_GET['tab']);
     $out    = '<select name="ezpz_option_user" class="ezpz_option_user" form="'.$form.'" dir="'.(is_rtl()?'rtl':'ltr').'">
                 <option value="all" '.($select=='all'?'selected="selected"':'').'>All</option>
@@ -76,23 +76,20 @@ function ezpz_option_dropdown(){
     </select>';
 }
 
-/*function get_ezpz_settings($name,$roles='',$default=''){
+function expz_user_settings($name,$default=[]){
     global $current_user;
-    $roles = empty($roles)?$current_user->roles:[$roles];
-    //var_dump($roles);
-    if(!empty($roles) and $name != 'all'){
-        foreach($roles as $role){
-            $opt = get_option("$role-$name",[]);
-            return empty($opt)?$default:$opt;
-        }
+    foreach($current_user->roles as $role){
+        if($opt = get_option("$role-$name",[]))
+        return $opt;
     }
-    return get_option("all-$name",[]);
-}*/
 
-function expz_admin_settings(){
+    return get_option("all-$name",$default);
+}
+
+function expz_admin_settings($tab='',$default=[]){
     $role = isset($_POST['ezpz_option_user'])?$_POST['ezpz_option_user']:'all';
-    $tab  = isset($_GET['tab'])?$_GET['tab']:'customizing-branding';
-    return get_option("$role-$tab");
+    $tab  = empty($tab)?(isset($_GET['tab'])?$_GET['tab']:'customizing-branding'):$tab;
+    return get_option("$role-$tab",$default);
 }
 
 /*function ezpz_tweaks_get_dashboard_widgets(){

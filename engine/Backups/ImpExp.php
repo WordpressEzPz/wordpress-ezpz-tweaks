@@ -45,11 +45,21 @@ class ImpExp {
 		if ( !\current_user_can( 'manage_options' ) ) {
 			return;
 		}
+		global $wp_roles;
 
 		$settings      = array();
-		$settings[ 0 ] = \get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-customizing-branding' );
+		$roles = $wp_roles->roles;
+		$roles['all'] = 'All';
+		$list = ['customizing-branding','performance','security'];
+		foreach($roles as $key=>$value){
+			foreach($list as $lst){
+				if($opt = get_option("$key-$lst"))
+				$settings["$key-$lst"] = $opt;
+			}
+		}
+		/*$settings[ 0 ] = \get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-customizing-branding' );
 		$settings[ 1 ] = \get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-performance' );
-		$settings[ 2 ] = \get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-security' );
+		$settings[ 2 ] = \get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-security' );*/
 
 		\ignore_user_abort( true );
 

@@ -134,9 +134,12 @@ class Import_Export {
 			return false;
 		}
 
-        update_option( EZPZ_TWEAKS_TEXTDOMAIN . '-customizing-branding', $data[ 0 ] );
-        update_option( EZPZ_TWEAKS_TEXTDOMAIN . '-performance', $data[ 1 ] );
-        update_option( EZPZ_TWEAKS_TEXTDOMAIN . '-security', $data[ 2 ] );
+        foreach($data as $key=>$val ){
+            update_option( $key, $val);
+        }
+        //update_option( EZPZ_TWEAKS_TEXTDOMAIN . '-customizing-branding', $data[ 0 ] );
+        //update_option( EZPZ_TWEAKS_TEXTDOMAIN . '-performance', $data[ 1 ] );
+        //update_option( EZPZ_TWEAKS_TEXTDOMAIN . '-security', $data[ 2 ] );
 
 		return true;
 	}

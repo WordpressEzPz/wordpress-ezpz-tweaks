@@ -135,6 +135,7 @@ class Render extends Settings {
             // Hide if not current tab
             $style = $current_tab == $tab['id'] ? '' : 'display: none';
             echo '<div id="'. $tab['id'] .'" class="wp-tab-panel" style="'. $style .'">';
+            //add dropdown user option
                 foreach(self::get_sections(false, $tab['id']) as $section) {
                     if (isset($section['is_cmb2']) && $section['is_cmb2'] === false) {
                         continue;

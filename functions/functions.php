@@ -61,6 +61,40 @@ function ezpz_tweaks_recursive_sanitize( $array ) {
     return $array;
 }
 
+function ezpz_option_dropdown(){
+    global $wp_roles;
+    $select = empty($_POST['ezpz_option_user'])?'all':$_POST['ezpz_option_user'];var_dump($select);
+    $form   = 'wpezpz-tweaks_options_'.(empty($_GET['tab'])?'customizing-branding':$_GET['tab']);
+    $out    = '<select name="ezpz_option_user" class="ezpz_option_user" form="'.$form.'" dir="'.(is_rtl()?'rtl':'ltr').'">
+                <option value="all" '.($select=='all'?'selected="selected"':'').'>All</option>
+                <optgroup label="Roles">';
+    foreach($wp_roles->roles as $key=>$value){
+        $out .="<option value='$key' ".($select==$key?'selected="selected"':'').">{$value['name']}</option>";
+    }
+    return $out.'
+        </optgroup>    
+    </select>';
+}
+
+/*function get_ezpz_settings($name,$roles='',$default=''){
+    global $current_user;
+    $roles = empty($roles)?$current_user->roles:[$roles];
+    //var_dump($roles);
+    if(!empty($roles) and $name != 'all'){
+        foreach($roles as $role){
+            $opt = get_option("$role-$name",[]);
+            return empty($opt)?$default:$opt;
+        }
+    }
+    return get_option("all-$name",[]);
+}*/
+
+function expz_admin_settings(){
+    $role = isset($_POST['ezpz_option_user'])?$_POST['ezpz_option_user']:'all';
+    $tab  = isset($_GET['tab'])?$_GET['tab']:'customizing-branding';
+    return get_option("$role-$tab");
+}
+
 /*function ezpz_tweaks_get_dashboard_widgets(){
     global $wp_meta_boxes;
     if(isset($wp_meta_boxes['dashboard']))

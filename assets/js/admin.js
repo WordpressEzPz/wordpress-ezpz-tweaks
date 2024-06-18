@@ -127,7 +127,8 @@
 				var data = {
 					action: 'wpezpz_change_page_editor',
 					_ajax_nonce: ezpz_object.security_update,
-					slug: $(selected).val()
+					slug: $(selected).val(),
+					role: $('.ezpz_option_user').val()
 				};
 				jQuery.post( ezpz_object.ajax_url, data, function(response) {
 					if ( response.success && typeof response.data !== 'undefined' ) {

@@ -73,7 +73,7 @@ class Settings_Page {
 		add_filter( 'upload_mimes', array( $this, 'allowed_wp_upload_mimes' ) );
 		add_filter( 'wp_check_filetype_and_ext', array( $this, 'maybe_update_mime_types' ), 10, 4 );
 
-
+		add_action( 'admin_init', array( $this, 'save_option_for_roles' ) );
 		$hidden_users = new \EZPZ_TWEAKS\Engine\Features\Hidden_Users();
 		$hidden_users->initialize();
 
@@ -87,9 +87,12 @@ class Settings_Page {
 	// get options data and set to variables
 	public function __construct() {
 		$this->get_locale         = get_locale();
-		$this->customizing_option = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-customizing-branding' );
+		/*$this->customizing_option = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-customizing-branding' );
 		$this->performance_option = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-performance' );
-		$this->security_option 	  = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-security' );
+		$this->security_option 	  = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-security' );*/
+		$this->customizing_option = expz_admin_settings();
+		$this->performance_option = expz_admin_settings();
+		$this->security_option 	  = expz_admin_settings();
 	}
 
 	/**
@@ -399,5 +402,41 @@ class Settings_Page {
         wp_enqueue_style( EZPZ_TWEAKS_TEXTDOMAIN . '-select2-css', EZPZ_TWEAKS_PLUGIN_ROOT_URL.'assets/css/select2.min.css');
         wp_enqueue_script( EZPZ_TWEAKS_TEXTDOMAIN . '-select2-js', EZPZ_TWEAKS_PLUGIN_ROOT_URL.'assets/js/select2.min.js', array(), '1.0' );
     }
+
+	public function save_option_for_roles(){
+
+		if(!isset($_POST['ezpz_nonce']))
+		return;
+
+		if(!wp_verify_nonce($_POST['ezpz_nonce'],'Acti0n_Save_0pti0n')){
+			add_action('admin_notices', function(){
+				echo '<div class="notice notice-error is-dismissible"><p>' .  __( 'Problem Nonce is not valid.', EZPZ_TWEAKS_TEXTDOMAIN ) . '</p></div>';
+			});
+			return;
+		}
+		
+		$sname = empty($_GET['tab'])?'customizing-branding':sanitize_text_field($_GET['tab']);
+		$sname = sanitize_text_field($_POST['ezpz_option_user'])."-$sname";
+		unset($_POST['ezpz_option_user']);
+		unset($_POST['ezpz_nonce']);
+		unset($_POST['object_id']);
+		unset($_POST['submit-cmb']);
+		
+		if(isset($_POST['nonce_CMB2phpwpezpz-tweaks_options_customizing-branding']))
+		unset($_POST['nonce_CMB2phpwpezpz-tweaks_options_customizing-branding']);
+		$_POST = array_filter($_POST,function($item){
+			if(is_array($item))
+			$item = array_filter($item);
+			return !empty($item);
+		});
+		$_POST = array_map(function($item){
+			if(is_array($item))
+			return array_map('sanitize_text_field',$item);
+		else
+			return sanitize_text_field($item);
+		},$_POST);
+
+		update_option($sname,$_POST);
+	}
 
 }

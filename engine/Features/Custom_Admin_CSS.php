@@ -16,7 +16,8 @@ class Custom_Admin_CSS {
 	public $customizing_option;
 
 	public function __construct() {
-		$this->customizing_option = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-customizing-branding' );
+		//$this->customizing_option = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-customizing-branding' );
+		$this->customizing_option = expz_user_settings('customizing-branding');
 	}
 
     /**
@@ -35,7 +36,7 @@ class Custom_Admin_CSS {
 	 * Load custom admin css that user entered into branding options
 	 */
 	public function custom_admin_css() {
-		if (isset( $_POST['custom_admin_css'] ) && !empty($_POST['custom_admin_css']) && isset($_POST['custom_admin_css']['cm_code'])) {
+		if (isset( $_POST['custom_admin_css'] ) && isset($_POST['custom_admin_css']['cm_code'])) {
 			echo '<style type="text/css">' . $_POST['custom_admin_css']['cm_code'] . '</style>';
 		} else if ( isset( $this->customizing_option['custom_admin_css'] ) && isset($this->customizing_option['custom_admin_css']['cm_code']) ) {
 			echo '<style type="text/css">' . $this->customizing_option['custom_admin_css']['cm_code'] . '</style>';

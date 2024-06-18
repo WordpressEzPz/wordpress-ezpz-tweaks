@@ -54,7 +54,8 @@ class Custom_Font {
 
     public static function get_fonts() {
         if ( empty( self::$customizing_option ) ) {
-            self::$customizing_option = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-customizing-branding' );
+            //self::$customizing_option = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-customizing-branding' );
+            self::$customizing_option = expz_user_settings('customizing-branding');
         }
 
         if ( isset( $_POST['submit-cmb'] ) ) {

@@ -31,9 +31,12 @@ class Settings {
 	public function initialize() {
 
 		$this->get_locale		  = get_locale();
-		$this->customizing_option = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-customizing-branding' );
-		$this->performance_option = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-performance' );
-		$this->security_option 	  = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-security' );
+		//$this->customizing_option = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-customizing-branding' );
+		//$this->performance_option = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-performance' );
+		//$this->security_option 	  = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-security' );
+		$this->customizing_option = expz_user_settings( 'customizing-branding' );
+		$this->performance_option = expz_user_settings( 'performance' );
+		$this->security_option 	  = expz_user_settings( 'security' );
 
 		$Backups = new Import_Export();
 		$font = new Font();

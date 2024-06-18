@@ -32,7 +32,8 @@ class Dashboard_Colors {
     ];
 
     public function __construct() {
-        $this->customizing_option = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-customizing-branding' );
+        //$this->customizing_option = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-customizing-branding' );
+        $this->customizing_option = expz_user_settings('customizing-branding');
     }
 
     /**
@@ -66,7 +67,7 @@ class Dashboard_Colors {
         }
 
         $key = str_replace( 'admin_colors__', '', $key );
-        
+        var_dump($_POST);
         $colors = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-admin_colors', self::DEFAULT_COLORS );
         $colors[$key] = sanitize_hex_color( $value ) ?: self::DEFAULT_COLORS[$key];
         update_option( EZPZ_TWEAKS_TEXTDOMAIN . '-admin_colors', $colors );

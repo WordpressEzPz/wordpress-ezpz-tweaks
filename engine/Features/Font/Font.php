@@ -18,7 +18,8 @@ class Font {
     public function __construct()
     {
         if ( empty( self::$customizing_option ) ) {
-            self::$customizing_option = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-customizing-branding' );
+            //self::$customizing_option = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-customizing-branding' );
+			self::$customizing_option = expz_user_settings('customizing-branding');
         }   
     }
 

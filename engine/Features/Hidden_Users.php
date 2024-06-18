@@ -16,7 +16,8 @@ class Hidden_Users {
 	protected $security_option;
 
 	public function __construct() {
-		$this->security_option = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-security' );
+		//$this->security_option = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-security' );
+		$this->security_option = expz_user_settings('security');
 	}
 
     /**

@@ -73,7 +73,7 @@ class Settings_Page {
 		add_filter( 'upload_mimes', array( $this, 'allowed_wp_upload_mimes' ) );
 		add_filter( 'wp_check_filetype_and_ext', array( $this, 'maybe_update_mime_types' ), 10, 4 );
 
-		add_action( 'admin_init', array( $this, 'save_option_for_roles' ) );
+		//add_action( 'init', array( $this, 'save_option_for_roles' ), 1);
 		$hidden_users = new \EZPZ_TWEAKS\Engine\Features\Hidden_Users();
 		$hidden_users->initialize();
 
@@ -86,14 +86,15 @@ class Settings_Page {
 
 	// get options data and set to variables
 	public function __construct() {
-		$this->get_locale         = get_locale();
+		
+		self::save_option_for_roles();
 		/*$this->customizing_option = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-customizing-branding' );
 		$this->performance_option = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-performance' );
 		$this->security_option 	  = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-security' );*/
 		$this->customizing_option = expz_admin_settings('customizing-branding');
 		$this->performance_option = expz_admin_settings('performance');
 		$this->security_option 	  = expz_admin_settings('security');
-
+		$this->get_locale         = get_locale();
 	}
 
 	/**
@@ -239,7 +240,9 @@ class Settings_Page {
 	 * Related feature: Disable Theme & Plugin File Editor
 	 */
 	public function deactivate_file_editor() {
-		if ( (isset($_POST['deactivate_file_editor']) && sanitize_text_field($_POST['deactivate_file_editor']) == 'on') || !isset($_POST['deactivate_file_editor']) && isset($_POST['object_id']) && sanitize_text_field($_POST['object_id']) != 'wpezpz-tweaks-security' && isset($this->security_option['deactivate_file_editor']) && $this->security_option['deactivate_file_editor'] == 'on' ) {
+		//if ( (isset($_POST['deactivate_file_editor']) && sanitize_text_field($_POST['deactivate_file_editor']) == 'on') || !isset($_POST['deactivate_file_editor']) && isset($_POST['object_id']) && sanitize_text_field($_POST['object_id']) != 'wpezpz-tweaks-security' && isset($this->security_option['deactivate_file_editor']) && $this->security_option['deactivate_file_editor'] == 'on' ) {
+		$option = expz_user_settings('security');
+		if(!empty($option['deactivate_file_editor']) and $option['deactivate_file_editor']=='on'){
 			define( 'DISALLOW_FILE_EDIT', true );
 		} else {
 			define( 'DISALLOW_FILE_EDIT', false );
@@ -404,7 +407,7 @@ class Settings_Page {
 
 	public function save_option_for_roles(){
 
-		if(!isset($_POST['ezpz_nonce']))
+		if(!is_admin() or !isset($_POST['ezpz_nonce']))
 		return;
 
 		if(!wp_verify_nonce($_POST['ezpz_nonce'],'Acti0n_Save_0pti0n')){
@@ -413,9 +416,7 @@ class Settings_Page {
 			});
 			return;
 		}
-		
-		$sname = empty($_GET['tab'])?'customizing-branding':sanitize_text_field($_GET['tab']);
-		$sname = sanitize_text_field($_POST['ezpz_option_user'])."-$sname";
+		$sname = sanitize_text_field($_POST['ezpz_option_user']).str_replace(EZPZ_TWEAKS_TEXTDOMAIN,'',$_POST['object_id']);
 		unset($_POST['ezpz_nonce']);
 		unset($_POST['submit-cmb']);
 		
@@ -432,8 +433,7 @@ class Settings_Page {
 		else
 			return sanitize_text_field($item);
 		},$_POST);
-
+		
 		update_option($sname,$_POST);
 	}
-
 }

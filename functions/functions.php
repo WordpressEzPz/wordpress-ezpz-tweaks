@@ -78,7 +78,7 @@ function ezpz_option_dropdown(){
 
 function expz_user_settings($name,$default=[]){
     global $current_user;
-    foreach($current_user->roles as $role){
+    foreach($current_user->roles as $role){var_dump("$role-$name");
         if($opt = get_option("$role-$name",[]))
         return $opt;
     }

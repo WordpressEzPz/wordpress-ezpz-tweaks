@@ -19,10 +19,11 @@
                     if($('ul.wp-tab-bar li a').index(this)<3){
                         $('.ezpz_option_user').show();
                         setTimeout(function(){
-                            tab = (new URL(location.href)).searchParams.get('tab');
-                            if(tab) 
-                            $('.ezpz_option_user').attr('form','wpezpz-tweaks_options_'+tab);
-                            $('[name="ezpz_nonce"]').attr('form','wpezpz-tweaks_options_'+tab);
+                            tab = new URLSearchParams(window.location.href).get('tab');console.log(tab);
+                            if(tab){
+                                $('.ezpz_option_user').attr('form','wpezpz-tweaks_options_'+tab);
+                                $('[name="ezpz_nonce"]').attr('form','wpezpz-tweaks_options_'+tab);                                
+                            }
                         }, 1000);
                     }else
                         $('.ezpz_option_user').hide();

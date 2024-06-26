@@ -182,11 +182,23 @@ class Import_Export {
 	}
 
     public function get_export_data() {
-        $data = [
+        /*$data = [
             0 => get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-customizing-branding', [] ),
             1 => get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-performance', [] ),
             2 => get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-security', [] ),
-        ];
+        ];*/
+        global $wp_roles;
+
+		$data      = array();
+		$roles = $wp_roles->roles;
+		$roles['all'] = 'All';
+		$list = ['customizing-branding','performance','security'];
+		foreach($roles as $key=>$value){
+			foreach($list as $lst){
+				if($opt = get_option("$key-$lst"))
+				$data["$key-$lst"] = $opt;
+			}
+		}
 
         return $data;
     }

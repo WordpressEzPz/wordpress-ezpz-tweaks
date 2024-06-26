@@ -110,10 +110,12 @@ class ImpExp {
 
 		if ( $settings_file ) {
 			$settings = \json_decode( (string) $settings_file );
-
-			\update_option( EZPZ_TWEAKS_TEXTDOMAIN . '-customizing-branding', \get_object_vars( $settings[ 0 ] ) );
+			foreach($settings as $key=>$value){
+				\update_option($key, \get_object_vars($value));
+			}
+			/*\update_option( EZPZ_TWEAKS_TEXTDOMAIN . '-customizing-branding', \get_object_vars( $settings[ 0 ] ) );
 			\update_option( EZPZ_TWEAKS_TEXTDOMAIN . '-performance', \get_object_vars( $settings[ 1 ] ) );
-			\update_option( EZPZ_TWEAKS_TEXTDOMAIN . '-security', \get_object_vars( $settings[ 2 ] ) );
+			\update_option( EZPZ_TWEAKS_TEXTDOMAIN . '-security', \get_object_vars( $settings[ 2 ] ) );*/
 
 			\wp_safe_redirect( \admin_url( 'admin.php?page=' . EZPZ_TWEAKS_TEXTDOMAIN ) );
 			exit;

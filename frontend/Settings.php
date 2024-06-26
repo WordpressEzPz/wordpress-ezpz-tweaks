@@ -100,7 +100,8 @@ class Settings {
 
 			add_filter( 'wp_revisions_to_keep', function ( $num, $post ) {
 
-				$max_revisions = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-performance' )['limit_post_revisions'];
+				//$max_revisions = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-performance' )['limit_post_revisions'];
+				$max_revisions = expz_user_settings('performance' )['limit_post_revisions'];
 				if ( $max_revisions ) {
 					return $max_revisions;
 				}

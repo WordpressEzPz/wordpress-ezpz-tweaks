@@ -59,13 +59,15 @@
     }
 
     function cmb2_types_esc_select2($i, $meta_value, $args, $cmb2_field){
+        
         $tab = $args['render_row_cb'][0]->object_id;
         $len = strlen(EZPZ_TWEAKS_TEXTDOMAIN)+1;
         $tab = substr($tab,$len);
         $opt = expz_admin_settings($tab);
-        if(empty($opt) or empty($opt[$args['_name']]))
-        return $meta_value;
-        return esc_attr($opt[$args['_name']]);
+        //if(empty($opt))
+        //return $meta_value;
+
+        return empty($opt[$args['_name']])?'':esc_attr($opt[$args['_name']]);
     }
 
     function cmb2_types_esc_code_editor($i, $meta_value, $args, $cmb2_field){

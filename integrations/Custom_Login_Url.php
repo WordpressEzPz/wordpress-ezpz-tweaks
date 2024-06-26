@@ -19,7 +19,6 @@ class Custom_Login_Url {
 
 		//$this->security_option = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-security' );
 		$this->security_option = expz_user_settings( 'security' );
-
 		if( isset( $this->security_option['custom_login_url'] ) ) {
 			if ( is_multisite() && ! function_exists( 'is_plugin_active_for_network' ) || ! function_exists( 'is_plugin_active' ) ) {
 				require_once( ABSPATH . '/wp-admin/includes/plugin.php' );

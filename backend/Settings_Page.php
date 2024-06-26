@@ -91,9 +91,9 @@ class Settings_Page {
 		/*$this->customizing_option = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-customizing-branding' );
 		$this->performance_option = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-performance' );
 		$this->security_option 	  = get_option( EZPZ_TWEAKS_TEXTDOMAIN . '-security' );*/
-		$this->customizing_option = expz_admin_settings('customizing-branding');
-		$this->performance_option = expz_admin_settings('performance');
-		$this->security_option 	  = expz_admin_settings('security');
+		$this->customizing_option = expz_user_settings('customizing-branding');
+		$this->performance_option = expz_user_settings('performance');
+		$this->security_option 	  = expz_user_settings('security');
 		$this->get_locale         = get_locale();
 	}
 
@@ -240,9 +240,7 @@ class Settings_Page {
 	 * Related feature: Disable Theme & Plugin File Editor
 	 */
 	public function deactivate_file_editor() {
-		//if ( (isset($_POST['deactivate_file_editor']) && sanitize_text_field($_POST['deactivate_file_editor']) == 'on') || !isset($_POST['deactivate_file_editor']) && isset($_POST['object_id']) && sanitize_text_field($_POST['object_id']) != 'wpezpz-tweaks-security' && isset($this->security_option['deactivate_file_editor']) && $this->security_option['deactivate_file_editor'] == 'on' ) {
-		$option = expz_user_settings('security');
-		if(!empty($option['deactivate_file_editor']) and $option['deactivate_file_editor']=='on'){
+		if(!empty($this->security_option['deactivate_file_editor']) and $this->security_option['deactivate_file_editor']=='on'){
 			define( 'DISALLOW_FILE_EDIT', true );
 		} else {
 			define( 'DISALLOW_FILE_EDIT', false );

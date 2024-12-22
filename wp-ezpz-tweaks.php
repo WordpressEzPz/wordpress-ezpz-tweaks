@@ -27,16 +27,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'EZPZ_TWEAKS_VERSION', '1.2.0' );
 define( 'EZPZ_TWEAKS_TEXTDOMAIN', 'wpezpz-tweaks' );
-define( 'EZPZ_TWEAKS_NAME', __( 'WPEzPz Tweaks', EZPZ_TWEAKS_TEXTDOMAIN ) );
+
 define( 'EZPZ_TWEAKS_PLUGIN_ROOT', plugin_dir_path( __FILE__ ) );
 define( 'EZPZ_TWEAKS_PLUGIN_ROOT_URL', plugin_dir_url( __FILE__ ) );
 define( 'EZPZ_TWEAKS_PLUGIN_ABSOLUTE', __FILE__ );
 define( 'EZPZ_TWEAKS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
 add_action(
-	'init',
-	static function () {
+	'init',function () {
 		load_plugin_textdomain( EZPZ_TWEAKS_TEXTDOMAIN, false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+		define( 'EZPZ_TWEAKS_NAME', __( 'WPEzPz Tweaks', EZPZ_TWEAKS_TEXTDOMAIN ) );
 	}
 );
 

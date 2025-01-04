@@ -234,6 +234,10 @@ class Settings_Page {
 	 * Related feature: Disable Theme & Plugin File Editor
 	 */
 	public function deactivate_file_editor() {
+				
+		if (defined('DISALLOW_FILE_EDIT'))
+			return;
+		
 		if ( (isset($_POST['deactivate_file_editor']) && sanitize_text_field($_POST['deactivate_file_editor']) == 'on') || !isset($_POST['deactivate_file_editor']) && isset($_POST['object_id']) && sanitize_text_field($_POST['object_id']) != 'wpezpz-tweaks-security' && isset($this->security_option['deactivate_file_editor']) && $this->security_option['deactivate_file_editor'] == 'on' ) {
 			define( 'DISALLOW_FILE_EDIT', true );
 		} else {
